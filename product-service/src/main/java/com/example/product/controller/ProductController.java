@@ -51,4 +51,24 @@ public class ProductController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/category/{categoryId}")
+    public List<Product> getProductsByCategory(@PathVariable Long categoryId) {
+        return productRepository.findByCategoryId(categoryId);
+    }
+
+    @GetMapping("/available")
+    public List<Product> getAvailableProducts() {
+        return productRepository.findByStockGreaterThan(0);
+    }
+
+    @PatchMapping("/{id}/stock")
+    public ResponseEntity<Product> updateProductStock(@PathVariable Long id, @RequestBody Integer stock) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setStock(stock);
+                    return ResponseEntity.ok(productRepository.save(product));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 } 

@@ -1,12 +1,10 @@
 package com.example.order.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -22,4 +20,10 @@ public class Order {
     private String customerEmail;
     private LocalDateTime orderDate;
     private String status;
+    private Long storeId;
+    private LocalDateTime estimatedCompletionTime;
+    
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<OrderItem> items;
 } 

@@ -1,7 +1,17 @@
+CREATE TABLE IF NOT EXISTS CATEGORIES (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    description VARCHAR(500)
+);
+
 CREATE TABLE IF NOT EXISTS PRODUCTS (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description VARCHAR(500),
     price DOUBLE NOT NULL,
-    stock INT NOT NULL
+    stock INT NOT NULL,
+    preparation_time INT,
+    category_id BIGINT,
+    FOREIGN KEY (category_id) REFERENCES CATEGORIES(id)
 ); 
